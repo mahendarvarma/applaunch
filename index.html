@@ -4,285 +4,1043 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NearMate - Launch Experience</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #3949ff;
+            --secondary: #00c2ff;
+            --dark: #030618;
+            --light: #ffffff;
+            --accent: #00ffaa;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Rajdhani', sans-serif;
         }
 
         body {
-            background-color: #090a1a;
-            color: white;
-            height: 100vh;
+            background-color: var(--dark);
+            color: var(--light);
+            font-family: 'Rajdhani', sans-serif;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            height: 100vh;
+            width: 100vw;
             position: relative;
         }
 
-        .background {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #090a1a 0%, #10102d 100%);
-            z-index: -1;
+        /* Main container */
+        .app-container {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
-
-        .grid-overlay {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(89, 65, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 174, 255, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            z-index: -1;
-        }
-
-        .container {
+        
+        /* Hero section */
+        .hero {
+            position: relative;
+            z-index: 10;
             text-align: center;
-            padding: 2rem;
-            max-width: 800px;
+            max-width: 900px;
+            padding: 2rem 2rem 5rem 2rem;
+            transform: translateZ(0);
+            margin-top: -40px;
+        }
+        
+        .logo-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 2rem;
+        }
+        
+        .logo {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 0 10px rgba(0, 194, 255, 0.5));
+        }
+        
+        .logo-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1;
-        }
-
-        .logo {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(89, 65, 255, 0.2) 0%, rgba(0, 174, 255, 0.2) 100%);
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 3rem;
-            position: relative;
-            animation: pulse 2s infinite;
-            box-shadow: 0 0 30px rgba(89, 65, 255, 0.5);
+            border: 2px solid var(--secondary);
+            animation: logoRingSpin 10s linear infinite;
         }
-
-        .logo::before {
-            content: "";
+        
+        @keyframes logoRingSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .logo-glow {
             position: absolute;
-            width: 210px;
-            height: 210px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, rgba(0, 194, 255, 0.3) 0%, rgba(57, 73, 255, 0.1) 40%, transparent 70%);
             border-radius: 50%;
-            border: 2px solid rgba(89, 65, 255, 0.3);
-            animation: ripple 2s infinite;
+            filter: blur(10px);
+            z-index: 1;
+            animation: pulse 3s ease-in-out infinite;
         }
-
-        .logo img {
-            width: 120px;
-            height: 120px;
-            object-fit: contain;
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.8); }
+            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+            100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.8); }
         }
-
-        h1.title {
+        
+        .title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 900;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #5941ff, #00aeff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(89, 65, 255, 0.5);
-            letter-spacing: 1px;
             text-transform: uppercase;
-        }
-
-        p.subtitle {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            color: rgba(255, 255, 255, 0.95);
-            max-width: 600px;
-            line-height: 1.6;
-            text-shadow: 0 0 10px rgba(0, 174, 255, 0.5);
-        }
-
-        .highlight {
-            background: linear-gradient(45deg, #5941ff, #00aeff);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 700;
+            position: relative;
+            overflow: hidden;
         }
-
-        .launch-btn {
-            font-family: 'Orbitron', sans-serif;
-            padding: 1.2rem 3.5rem;
-            font-size: 1.3rem;
+        
+        .title::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: skewX(-25deg);
+            animation: titleSweep 5s infinite;
+        }
+        
+        @keyframes titleSweep {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .highlight {
+            color: var(--secondary);
             font-weight: 700;
-            background: linear-gradient(45deg, #5941ff, #00aeff);
-            color: white;
+            position: relative;
+            padding-bottom: 2px;
+        }
+        
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--secondary);
+            animation: highlightLine 3s infinite;
+        }
+        
+        @keyframes highlightLine {
+            0% { width: 0; left: 0; }
+            50% { width: 100%; left: 0; }
+            75% { width: 100%; left: 0; }
+            100% { width: 0; left: 100%; }
+        }
+        
+        /* Launch button container for better positioning */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto 5rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Add a glow effect behind the button */
+        .button-glow {
+            position: absolute;
+            width: 280px;
+            height: 80px;
+            background: radial-gradient(ellipse at center, rgba(0, 194, 255, 0.5) 0%, rgba(57, 73, 255, 0.2) 50%, transparent 70%);
+            border-radius: 50px;
+            filter: blur(15px);
+            z-index: 9;
+            animation: glowPulse 2s infinite alternate;
+        }
+        
+        @keyframes glowPulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        /* Launch button with enhanced visibility */
+        .launch-btn {
+            position: relative;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 1.2rem 3rem;
+            color: var(--light);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(89, 65, 255, 0.5);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 25px rgba(57, 73, 255, 0.8);
+            z-index: 10;
+            display: block;
+            margin: 0 auto;
+            min-width: 250px;
+            /* Add a glowing animation to draw attention */
+            animation: buttonPulse 2s infinite alternate;
+        }
+        
+        @keyframes buttonPulse {
+            0% { box-shadow: 0 0 25px rgba(57, 73, 255, 0.8); }
+            100% { box-shadow: 0 0 40px rgba(0, 194, 255, 0.9); }
+        }
+        
+        .launch-btn:hover {
+            box-shadow: 0 0 30px rgba(0, 194, 255, 0.7);
+            transform: translateY(-5px);
+        }
+        
+        .launch-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.3s ease;
+        }
+        
+        .launch-btn:hover::before {
+            left: 100%;
+            transition: all 0.8s ease;
+        }
+
+        /* Loading bar */
+        .progress-container {
+            position: absolute;
+            bottom: 32%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .progress-container.active {
+            opacity: 1;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 0.1s linear;
+        }
+        
+        .progress-text {
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        .launch-btn::before {
-            content: "";
+        /* Futuristic Background Elements */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: radial-gradient(circle at center, #0d1338 0%, #030618 70%);
+            overflow: hidden;
+        }
+        
+        .grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 194, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(57, 73, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: 1;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: gridPulse 15s infinite linear;
+        }
+        
+        @keyframes gridPulse {
+            0% { background-size: 30px 30px; }
+            50% { background-size: 40px 40px; }
+            100% { background-size: 30px 30px; }
+        }
+        
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            animation-delay: var(--delay);
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0; }
+            50% { opacity: var(--opacity); }
+            100% { opacity: 0; }
+        }
+        
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid rgba(0, 194, 255, 0.1);
+            z-index: 1;
+            animation: orbitRotate 20s linear infinite;
+        }
+        
+        @keyframes orbitRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .orbit-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--secondary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--secondary);
+        }
+        
+        .hexagon {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(57, 73, 255, 0.05);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation: hexRotate 20s infinite linear;
+            z-index: 1;
+        }
+        
+        @keyframes hexRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .data-flow {
+            position: absolute;
+            width: 2px;
+            height: 50px;
+            background: linear-gradient(to bottom, var(--primary), transparent);
+            animation: dataFlow var(--duration) infinite linear;
+            animation-delay: var(--delay);
+            z-index: 3;
+        }
+        
+        @keyframes dataFlow {
+            0% { transform: translateY(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+        
+        /* Loading animation for launch transition */
+        .launch-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .launch-transition.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .transition-logo {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            animation: transitionPulse 1s infinite alternate;
+        }
+        
+        @keyframes transitionPulse {
+            0% { transform: scale(1); filter: brightness(1); }
+            100% { transform: scale(1.2); filter: brightness(1.5); }
+        }
+        
+        /* Holographic display */
+        .hologram {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(57, 73, 255, 0.03);
+            box-shadow: 0 0 50px rgba(0, 194, 255, 0.1);
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .hologram::before {
+            content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
+            background: linear-gradient(45deg, transparent, rgba(0, 194, 255, 0.1), transparent);
+            animation: hologramSpin 10s linear infinite;
+        }
+        
+        @keyframes hologramSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .logo-container {
+                width: 150px;
+                height: 150px;
+                margin-top: 120px; /* Add top margin on mobile to push content down */
+            }
+            
+            .logo {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .progress-container {
+                width: 80%;
+                bottom: 40%; /* Move progress bar higher on mobile */
+            }
+            
+            .hero {
+                padding-top: 80px;
+                margin-bottom: 100px; /* Increase bottom margin on mobile */
+                margin-top: 0; /* Reset the negative margin on mobile */
+            }
+            
+            .button-container {
+                margin-bottom: 120px; /* Increase button container bottom margin on mobile */
+            }
+            
+            .event-banner {
+                top: 10px;
+                left: 10px;
+                right: auto;
+                max-width: calc(50% - 15px);
+            }
+            
+            .chairman-banner {
+                top: 10px;
+                right: 10px;
+                left: auto;
+                max-width: calc(50% - 15px);
+            }
+            
+            .chief-guest, .chairman-profile {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .guest-info, .chairman-info {
+                text-align: center;
+            }
+            
+            .acknowledgments-grid {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .acknowledgment-card {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .acknowledgments-footer {
+                position: relative; /* Change from fixed to relative for mobile */
+                margin-top: 30px;
+                padding-bottom: 25px;
+                max-height: none; /* Allow footer to expand naturally on mobile */
+            }
         }
 
-        .launch-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 30px rgba(89, 65, 255, 0.7);
-        }
-
-        .particles {
+        /* Update banner position and style to prevent covering logo animation */
+        .event-banner {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
+            top: 15px;
+            left: 15px;
+            width: auto;
+            max-width: 400px;
+            background: rgba(3, 6, 24, 0.6);
+            backdrop-filter: blur(5px);
+            padding: 12px 15px;
+            z-index: 15;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 194, 255, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 20px rgba(89, 65, 255, 0.5);
-                transform: scale(1);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(89, 65, 255, 0.7);
-                transform: scale(1.05);
-            }
-            100% {
-                box-shadow: 0 0 20px rgba(89, 65, 255, 0.5);
-                transform: scale(1);
-            }
-        }
-
-        @keyframes ripple {
-            0% {
-                transform: scale(1);
-                opacity: 0.7;
-            }
-            100% {
-                transform: scale(1.3);
-                opacity: 0;
-            }
-        }
-
-        @keyframes shine {
-            0% {
-                left: -100%;
-                top: -100%;
-            }
-            100% {
-                left: 100%;
-                top: 100%;
-            }
-        }
-
-        .circle {
+        .chairman-banner {
             position: absolute;
+            top: 15px;
+            right: 15px;
+            width: auto;
+            max-width: 400px;
+            background: rgba(3, 6, 24, 0.6);
+            backdrop-filter: blur(5px);
+            padding: 12px 15px;
+            z-index: 15;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 194, 255, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .chief-guest, .chairman-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            max-width: 100%;
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            border-left: none;
+        }
+
+        .guest-photo, .chairman-photo {
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(89, 65, 255, 0.3) 0%, rgba(0, 174, 255, 0.1) 100%);
-            z-index: -1;
+            object-fit: cover;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 0 15px rgba(0, 194, 255, 0.4);
+            flex-shrink: 0;
         }
 
-        .glow-effect {
-            position: relative;
+        .guest-info, .chairman-info {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
         }
 
-        .glow-effect::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+        .guest-name, .chairman-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 3px;
+            text-shadow: 0 0 8px rgba(0, 194, 255, 0.5);
+        }
+
+        .guest-title, .chairman-title {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+        }
+
+        .guest-message, .chairman-message {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            margin-top: 8px;
+            border-top: 1px solid rgba(0, 194, 255, 0.3);
+            padding-top: 6px;
+        }
+
+        @media (max-width: 992px) {
+            .event-banner, .chairman-banner {
+                max-width: 350px;
+            }
+        }
+
+        /* Acknowledgments Footer Styles */
+        .acknowledgments-footer {
+            position: fixed;
             bottom: 0;
-            background: linear-gradient(45deg, #5941ff, #00aeff);
-            filter: blur(20px);
-            opacity: 0.5;
-            z-index: -1;
+            left: 0;
+            width: 100%;
+            background: rgba(3, 6, 24, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            border-top: 1px solid rgba(0, 194, 255, 0.3);
+            z-index: 20;
+            max-height: 180px;
+            overflow-y: auto;
+        }
+
+        .acknowledgments-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .acknowledgments-title {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 194, 255, 0.5);
+        }
+
+        .acknowledgments-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .acknowledgment-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            background: rgba(57, 73, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(0, 194, 255, 0.2);
+            max-width: 360px;
+            transition: all 0.3s ease;
+        }
+
+        .acknowledgment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 194, 255, 0.2);
+            border-color: rgba(0, 194, 255, 0.4);
+        }
+
+        .acknowledgment-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 0 10px rgba(0, 194, 255, 0.3);
+        }
+
+        .acknowledgment-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .acknowledgment-name {
+            font-weight: 700;
+            color: var(--light);
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+        }
+
+        .acknowledgment-title {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            margin-bottom: 5px;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        .acknowledgment-message {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            line-height: 1.4;
         }
     </style>
 </head>
 <body>
-    <div class="background"></div>
-    <div class="grid-overlay"></div>
-    <div class="particles" id="particles"></div>
-    
-    <div class="container">
-        <div class="logo">
-            <img src="images/icon.png" alt="NearMate Logo">
+    <div class="app-container">
+        <!-- Futuristic background -->
+        <div class="background">
+            <div class="grid"></div>
+            <div class="stars" id="stars"></div>
+            <div class="hologram"></div>
+            
+            <!-- Orbits -->
+            <div class="orbit" style="width: 300px; height: 300px;">
+                <div class="orbit-particle" style="top: 0; left: 50%; transform: translateX(-50%);"></div>
+            </div>
+            <div class="orbit" style="width: 500px; height: 500px;">
+                <div class="orbit-particle" style="bottom: 0; left: 50%; transform: translateX(-50%);"></div>
+            </div>
+            <div class="orbit" style="width: 700px; height: 700px;">
+                <div class="orbit-particle" style="top: 50%; right: 0; transform: translateY(-50%);"></div>
+            </div>
+            
+            <!-- Hexagons -->
+            <div class="hexagon" style="top: 15%; left: 10%; opacity: 0.3;"></div>
+            <div class="hexagon" style="top: 70%; left: 20%; opacity: 0.2;"></div>
+            <div class="hexagon" style="top: 30%; right: 15%; opacity: 0.2;"></div>
+            <div class="hexagon" style="bottom: 20%; right: 10%; opacity: 0.3;"></div>
         </div>
-        <h1 class="title glow-effect">Welcome to the Grand Launch of NearMate</h1>
-        <p class="subtitle">A <span class="highlight">revolutionary app</span> to connect people based on <span class="highlight">goals, problems, and location</span>.</p>
-        <button class="launch-btn" id="launchBtn">Launch App Now</button>
+        
+        <!-- Hero section -->
+        <div class="hero">
+            <div class="logo-container">
+                <div class="logo-glow"></div>
+                <img src="images/icon.png" alt="NearMate Logo" class="logo">
+                <div class="logo-ring"></div>
+            </div>
+            
+            <h1 class="title">Welcome to the<br>NearMate Experience</h1>
+            
+            <p class="subtitle">
+                A <span class="highlight">revolutionary platform</span> designed to connect people based on shared <span class="highlight">goals</span>, common <span class="highlight">problems</span>, and <span class="highlight">location</span>.
+            </p>
+            
+            <div class="button-container">
+                <div class="button-glow"></div>
+                <button class="launch-btn" id="launchBtn">Launch App Now</button>
+            </div>
+            
+            <!-- Empty spacer div to ensure content is pushed up away from footer -->
+            <div style="height: 50px;"></div>
+        </div>
+        
+        <!-- Loading progress -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Initializing</div>
+        </div>
+        
+        <!-- Launch transition effect -->
+        <div class="launch-transition" id="launchTransition">
+            <img src="images/icon.png" alt="NearMate Logo" class="transition-logo">
+        </div>
+        
+        <!-- College Event Banner -->
+        <div class="event-banner">
+            <div class="chief-guest">
+                <img src="images/guestphoto.jpeg" alt="Prof. (Dr.) V. Balakista Reddy" class="guest-photo">
+                <div class="guest-info">
+                    <div class="guest-name">Prof. (Dr.) V. Balakista Reddy</div>
+                    <div class="guest-title">Chairman, Telangana State Council of Higher Education</div>
+                    <div>Legal scholar & former Vice-Chancellor at NALSAR University with expertise in International Air & Space Law.</div>
+                    <div class="guest-message">Honored to have him inaugurate NearMate.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chairman Banner -->
+        <div class="chairman-banner">
+            <div class="chairman-profile">
+                <img src="images/chairman.png" alt="Sri G. Panduranga Reddy" class="chairman-photo">
+                <div class="chairman-info">
+                    <div class="chairman-name">Sri G. Panduranga Reddy</div>
+                    <div class="chairman-title">Chairman, Sree Dattha Institutions</div>
+                    <div>Visionary leader with B.Sc., LLB. qualifications fostering educational excellence and holistic development.</div>
+                    <div class="chairman-message">We aim to equip students with knowledge to meet global demands.</div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="circle" style="width: 300px; height: 300px; left: -150px; top: 20%; opacity: 0.2;"></div>
-    <div class="circle" style="width: 200px; height: 200px; right: -100px; bottom: 30%; opacity: 0.15;"></div>
-    <div class="circle" style="width: 400px; height: 400px; right: 10%; top: -200px; opacity: 0.1;"></div>
+    <!-- Footer with Acknowledgments -->
+    <div class="acknowledgments-footer">
+        <div class="acknowledgments-container">
+            <h3 class="acknowledgments-title">Special Thanks</h3>
+            <div class="acknowledgments-grid">
+                <div class="acknowledgment-card">
+                    <img src="images/principal.jpeg" alt="Principal" class="acknowledgment-photo">
+                    <div class="acknowledgment-info">
+                        <div class="acknowledgment-name">Prof. Dr. S. Venkata Achuta Rao</div>
+                        <div class="acknowledgment-title">Dean-Academics & i/c Principal, Sree Dattha Institute</div>
+                        <div class="acknowledgment-message">Distinguished academician with 25+ years of experience and expertise in programming and AI.</div>
+                    </div>
+                </div>
+                
+                <div class="acknowledgment-card">
+                    <img src="images/hod.jpg" alt="HOD CSE" class="acknowledgment-photo">
+                    <div class="acknowledgment-info">
+                        <div class="acknowledgment-name">Dr. Sk. Mahaboob Basha</div>
+                        <div class="acknowledgment-title">HOD, Computer Science & Engineering</div>
+                        <div class="acknowledgment-message">Accomplished researcher with 20+ years of experience in AI, machine learning and data analytics.</div>
+                    </div>
+                </div>
+                
+                <div class="acknowledgment-card">
+                    <img src="images/vice_chairman.png" alt="Vice-Chairman" class="acknowledgment-photo">
+                    <div class="acknowledgment-info">
+                        <div class="acknowledgment-name">Dr. G.N.V. Vibhav Reddy</div>
+                        <div class="acknowledgment-title">Vice-Chairman, Sree Dattha Institutions</div>
+                        <div class="acknowledgment-message">"You are the nation-builders. You are the movers of technology. You are the agents of change."</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize particles
-            particlesJS('particles', {
-                particles: {
-                    number: { value: 80, density: { enable: true, value_area: 800 } },
-                    color: { value: ["#5941ff", "#00aeff"] },
-                    shape: { type: "circle" },
-                    opacity: { value: 0.5, random: true },
-                    size: { value: 3, random: true },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: "#5941ff",
-                        opacity: 0.2,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 1,
-                        direction: "none",
-                        random: true,
-                        straight: false,
-                        out_mode: "out",
-                        bounce: false
+            // Create stars
+            const starsContainer = document.getElementById('stars');
+            for(let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Random size
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Random position
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // Random twinkle animation
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                star.style.setProperty('--delay', `${Math.random() * 2}s`);
+                star.style.setProperty('--opacity', `${Math.random() * 0.7 + 0.3}`);
+                
+                starsContainer.appendChild(star);
+            }
+            
+            // Create data flow lines
+            for(let i = 0; i < 20; i++) {
+                const dataFlow = document.createElement('div');
+                dataFlow.classList.add('data-flow');
+                
+                // Random position
+                dataFlow.style.left = `${Math.random() * 100}%`;
+                
+                // Random flow animation
+                dataFlow.style.setProperty('--duration', `${Math.random() * 4 + 4}s`);
+                dataFlow.style.setProperty('--delay', `${Math.random() * 5}s`);
+                
+                document.querySelector('.background').appendChild(dataFlow);
+            }
+            
+            // Launch button functionality
+            const launchBtn = document.getElementById('launchBtn');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const launchTransition = document.getElementById('launchTransition');
+            
+            // Progress text options
+            const progressSteps = [
+                "Initializing connection",
+                "Locating nearby users",
+                "Preparing interface",
+                "Establishing secure connection",
+                "Optimizing experience",
+                "Almost ready",
+                "Launching NearMate"
+            ];
+            
+            launchBtn.addEventListener('click', function() {
+                // Disable button
+                launchBtn.disabled = true;
+                launchBtn.innerHTML = "Launching...";
+                launchBtn.style.opacity = "0.7";
+                
+                // Show progress
+                progressContainer.classList.add('active');
+                
+                // Progress animation
+                let progress = 0;
+                let currentStep = 0;
+                
+                const progressInterval = setInterval(() => {
+                    progress += 1;
+                    progressFill.style.width = `${progress}%`;
+                    
+                    // Update text at certain progress points
+                    if (progress % 15 === 0 && currentStep < progressSteps.length - 1) {
+                        currentStep++;
+                        progressText.textContent = progressSteps[currentStep];
+                        
+                        // Text animation
+                        progressText.style.animation = 'none';
+                        progressText.offsetHeight; // Trigger reflow
+                        progressText.style.animation = 'fadeIn 0.5s ease';
                     }
-                },
-                interactivity: {
-                    detect_on: "canvas",
-                    events: {
-                        onhover: { enable: true, mode: "grab" },
-                        onclick: { enable: true, mode: "push" }
-                    },
-                    modes: {
-                        grab: { distance: 140, line_linked: { opacity: 0.5 } },
-                        push: { particles_nb: 4 }
+                    
+                    if (progress >= 100) {
+                        clearInterval(progressInterval);
+                        
+                        // Show transition
+                        setTimeout(() => {
+                            launchTransition.classList.add('active');
+                            
+                            // Redirect after transition
+                            setTimeout(() => {
+                                window.location.href = 'countdown.html';
+                            }, 1500);
+                        }, 500);
                     }
-                }
+                }, 40); // Adjust for faster/slower progress
             });
-
-            // Launch button
-            document.getElementById('launchBtn').addEventListener('click', function() {
-                window.location.href = 'countdown.html';
+            
+            // Create initial animation effect
+            document.querySelectorAll('.hero > *').forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                element.style.transitionDelay = `${index * 0.2}s`;
+                
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, 100);
             });
+            
+            // Animate the guest banner with a slide-in effect
+            const eventBanner = document.querySelector('.event-banner');
+            const chiefGuest = document.querySelector('.chief-guest');
+            const chairmanBanner = document.querySelector('.chairman-banner');
+            const chairmanProfile = document.querySelector('.chairman-profile');
+            
+            // Initial state - position off-screen to the left for chief guest
+            chiefGuest.style.opacity = '0';
+            chiefGuest.style.transform = 'translateX(-50px)';
+            chiefGuest.style.transition = 'opacity 1s ease, transform 1s ease';
+            
+            // Initial state - position off-screen to the right for chairman
+            chairmanProfile.style.opacity = '0';
+            chairmanProfile.style.transform = 'translateX(50px)';
+            chairmanProfile.style.transition = 'opacity 1s ease, transform 1s ease';
+            
+            // Animate in after a short delay
+            setTimeout(() => {
+                chiefGuest.style.opacity = '1';
+                chiefGuest.style.transform = 'translateX(0)';
+                
+                chairmanProfile.style.opacity = '1';
+                chairmanProfile.style.transform = 'translateX(0)';
+            }, 500);
+            
+            // Add subtle hover effect for chief guest
+            chiefGuest.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            chiefGuest.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+            
+            // Add subtle hover effect for chairman
+            chairmanProfile.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            chairmanProfile.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+            
+            // Animate the acknowledgments section
+            const acknowledgmentCards = document.querySelectorAll('.acknowledgment-card');
+            
+            // Set initial state - hidden and moved up
+            acknowledgmentCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            // Stagger the animations
+            setTimeout(() => {
+                acknowledgmentCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 200); // 200ms delay between each card
+                });
+            }, 1000); // 1 second after page load
         });
     </script>
 </body>
