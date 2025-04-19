@@ -20,6 +20,10 @@
             color: white;
             overflow-x: hidden;
             position: relative;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
         }
 
         .background {
@@ -44,11 +48,20 @@
 
         .container {
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
             z-index: 1;
             position: relative;
+            height: 100vh;
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+
+        .container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
         }
 
         section {
@@ -63,11 +76,21 @@
             transform: translateY(50px);
             transition: opacity 0.8s ease, transform 0.8s ease;
             z-index: 0;
+            box-sizing: border-box; /* Ensure padding is included in height calculation */
+            overflow-y: auto; /* Allow scrolling if content is too large */
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            scroll-snap-align: center;
         }
 
         section.visible {
             opacity: 1 !important;
             transform: translateY(0) !important;
+            transform: translateX(0) !important;
+            transform: rotate(0) !important;
+            transform: scale(1) !important;
+            transform: perspective(1000px) rotateY(0) !important;
             z-index: 1;
             position: relative;
         }
@@ -120,6 +143,8 @@
             justify-content: center;
             width: 100%;
             margin-bottom: 2rem;
+            overflow: visible; /* Ensure content doesn't get cut off */
+            max-height: none; /* Remove any max-height limitations */
         }
 
         @media (min-width: 768px) {
@@ -199,6 +224,8 @@
             padding: 10px;
             background: rgba(30, 30, 50, 0.9);
             box-shadow: 0 0 20px rgba(149, 0, 255, 0.4);
+            height: auto; /* Ensure height is proportional */
+            margin: 0 auto;
         }
 
         .screen {
@@ -464,14 +491,22 @@
         }
         
         .testimonial-avatar {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             margin-right: 15px;
-            color: white;
+            overflow: hidden;
+            border: 2px solid rgba(149, 0, 255, 0.7);
+            box-shadow: 0 0 15px rgba(149, 0, 255, 0.4);
+        }
+        
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .testimonial-info {
@@ -505,6 +540,644 @@
                 align-items: center;
             }
         }
+
+        /* Additional styles for founder section */
+        .founder-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-width: 300px;
+        }
+        
+        .founder-photo-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(89, 65, 255, 0.5);
+            margin: 0 auto;
+        }
+        
+        .founder-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(89, 65, 255, 0.3), rgba(0, 174, 255, 0.3));
+            filter: blur(20px);
+            z-index: 1;
+        }
+        
+        .founder-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+        
+        .founder-photo:hover {
+            transform: scale(1.05);
+        }
+        
+        .founder-text {
+            flex: 1;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 30px rgba(89, 65, 255, 0.3);
+            max-width: 600px;
+        }
+        
+        .founder-title {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .founder-bio {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .founder-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #5941ff, #00aeff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 15px rgba(89, 65, 255, 0.5);
+            text-decoration: none;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(89, 65, 255, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .scene-content {
+                flex-direction: column;
+            }
+            
+            .founder-photo-container {
+                width: 200px;
+                height: 200px;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Make sure the founder section is properly displayed */
+        #founder {
+            min-height: 100vh;
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            z-index: 0;
+        }
+        
+        #founder.visible {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            z-index: 1;
+        }
+
+        /* Sparkle animation styles */
+        .sparkle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .sparkle-container.active {
+            opacity: 1;
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff 0%, transparent 70%);
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: sparkle-fade-out 1.5s ease-out forwards;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 9999;
+        }
+        
+        .sparkle.purple {
+            background: radial-gradient(circle, #9500ff 0%, transparent 70%);
+            box-shadow: 0 0 10px 2px #9500ff;
+        }
+        
+        .sparkle.blue {
+            background: radial-gradient(circle, #0062ff 0%, transparent 70%);
+            box-shadow: 0 0 10px 2px #0062ff;
+        }
+        
+        @keyframes sparkle-fade-out {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            20% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(0.2);
+                opacity: 0;
+            }
+        }
+
+        /* Random section transitions */
+        /* Base transitions that all sections have */
+        section {
+            min-height: 100vh;
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            z-index: 0;
+        }
+
+        /* Different transition classes that will be applied randomly */
+        .transition-fade-in {
+            opacity: 0;
+            transform: translateY(0);
+            transition: opacity 1.2s ease;
+        }
+        
+        .transition-slide-up {
+            opacity: 0;
+            transform: translateY(100px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .transition-slide-down {
+            opacity: 0;
+            transform: translateY(-100px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .transition-slide-left {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .transition-slide-right {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .transition-zoom-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+        
+        .transition-zoom-out {
+            opacity: 0;
+            transform: scale(1.2);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+        
+        .transition-flip {
+            opacity: 0;
+            transform: perspective(1000px) rotateY(90deg);
+            transform-origin: center;
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+        
+        .transition-rotate {
+            opacity: 0;
+            transform: rotate(-15deg);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+        
+        /* Visible state for all transitions */
+        section.visible {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            transform: translateX(0) !important;
+            transform: rotate(0) !important;
+            transform: scale(1) !important;
+            transform: perspective(1000px) rotateY(0) !important;
+            z-index: 1;
+            position: relative;
+        }
+
+        /* Content entry animations */
+        .content-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .content-item.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Delay classes for staggered animations */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+        .delay-6 { transition-delay: 0.6s; }
+        .delay-7 { transition-delay: 0.7s; }
+        .delay-8 { transition-delay: 0.8s; }
+
+        /* Special transition effects */
+        .transition-effect-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 90;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .transition-effect-container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Wipe effect */
+        .wipe-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: translateX(-100%);
+            background: linear-gradient(90deg, transparent, rgba(149, 0, 255, 0.2), rgba(0, 98, 255, 0.2), transparent);
+            filter: blur(20px);
+            animation: wipe-animation 1s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+        }
+        
+        @keyframes wipe-animation {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Flash effect */
+        .flash-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0);
+            animation: flash-animation 0.8s ease-out forwards;
+        }
+        
+        @keyframes flash-animation {
+            0% { background: rgba(255, 255, 255, 0); }
+            10% { background: rgba(255, 255, 255, 0.1); }
+            20% { background: rgba(255, 255, 255, 0); }
+            30% { background: rgba(255, 255, 255, 0.15); }
+            100% { background: rgba(255, 255, 255, 0); }
+        }
+        
+        /* Radial effect */
+        .radial-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(149, 0, 255, 0.2) 0%, transparent 70%);
+            animation: radial-animation 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        @keyframes radial-animation {
+            0% { width: 0; height: 0; }
+            100% { width: 300%; height: 300%; }
+        }
+        
+        /* Particles burst */
+        .particles-burst-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .burst-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #9500ff;
+            animation: burst-animation 1s ease-out forwards;
+        }
+        
+        @keyframes burst-animation {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), var(--y)) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        /* Grid glitch effect */
+        .grid-glitch-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(149, 0, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 98, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: grid-glitch-animation 1s linear forwards;
+        }
+        
+        @keyframes grid-glitch-animation {
+            0% { opacity: 0; background-size: 40px 40px; }
+            20% { opacity: 1; background-size: 20px 20px; }
+            40% { opacity: 0.8; background-size: 30px 30px; }
+            60% { opacity: 1; background-size: 15px 15px; }
+            80% { opacity: 0.7; background-size: 25px 25px; }
+            100% { opacity: 0; background-size: 20px 20px; }
+        }
+
+        /* Interactive elements hover effects */
+        .highlight-on-hover {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .highlight-on-hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #9500ff, #0062ff);
+            transition: width 0.3s ease;
+        }
+        
+        .highlight-on-hover:hover::after {
+            width: 100%;
+        }
+        
+        .highlight-on-hover:hover {
+            text-shadow: 0 0 8px rgba(149, 0, 255, 0.4);
+        }
+        
+        /* Floating animation for visual elements */
+        .float-animation {
+            animation: floating 4s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Pulse animation for important elements */
+        .pulse-animation {
+            animation: subtle-pulse 2s infinite;
+        }
+        
+        @keyframes subtle-pulse {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.05); filter: brightness(1.1); }
+            100% { transform: scale(1); filter: brightness(1); }
+        }
+        
+        /* Typing animation for text */
+        .typing-animation {
+            border-right: 2px solid #9500ff;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            animation: typing 2s steps(30, end) forwards;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        /* Bounce effect for buttons and interactive elements */
+        .bounce-on-hover {
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .bounce-on-hover:hover {
+            transform: scale(1.05);
+        }
+        
+        .bounce-on-hover:active {
+            transform: scale(0.95);
+        }
+        
+        /* Glow effect for  and containers */
+        .glow-on-hover {
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        
+        .glow-on-hover:hover {
+            box-shadow: 0 0 20px rgba(149, 0, 255, 0.6);
+            transform: translateY(-5px);
+        }
+        
+        /* Letter spacing animation for titles */
+        .letter-spacing-animation {
+            animation: letter-spacing 1s ease forwards;
+        }
+        
+        @keyframes letter-spacing {
+            0% { letter-spacing: -5px; opacity: 0; }
+            100% { letter-spacing: normal; opacity: 1; }
+        }
+
+        /* Improve visibility of section content */
+        h1, h2, p, .feature-list {
+            max-width: 100%;
+            width: 100%;
+        }
+        
+        /* Ensure phone mockups are visible */
+        .phone-mockup {
+            width: 90%;
+            max-width: 300px;
+            border-radius: 30px;
+            padding: 10px;
+            background: rgba(30, 30, 50, 0.9);
+            box-shadow: 0 0 20px rgba(149, 0, 255, 0.4);
+            height: auto; /* Ensure height is proportional */
+            margin: 0 auto;
+        }
+        
+        /* Fix for section visibility and centering */
+        .section-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            scroll-snap-align: center;
+            overflow: hidden;
+        }
+        
+        /* Media query adjustments for better mobile display */
+        @media (max-width: 768px) {
+            section {
+                padding: 3rem 1rem;
+                min-height: 100vh;
+                height: auto;
+                overflow-y: auto;
+            }
+            
+            h1 {
+                font-size: 2rem;
+                margin-top: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            .container {
+                height: 100%;
+                overflow-y: auto;
+                scroll-snap-type: y proximity; /* Better mobile experience */
+            }
+            
+            .scene-content {
+                margin-bottom: 1rem;
+                flex-direction: column;
+            }
+            
+            .phone-mockup {
+                max-width: 250px;
+            }
+            
+            .founder-photo-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .founder-text {
+                padding: 20px;
+            }
+            
+            /* Force visible sections on mobile */
+            section.visible {
+                display: flex !important;
+                opacity: 1 !important;
+            }
+        }
+
+        /* Add specific fixes for the intro section visibility */
+        #intro {
+            opacity: 1 !important;
+            visibility: visible !important;
+            min-height: 100vh;
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+        
+        #intro h1 {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
+        #intro .scene-content {
+            opacity: 1 !important;
+            visibility: visible !important;
+            min-height: 300px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            margin-top: 2rem;
+        }
+        
+        #intro .scene-visual, 
+        #intro .scene-text {
+            opacity: 1 !important;
+            visibility: visible !important;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @media (max-width: 768px) {
+            #intro .scene-content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+                margin-top: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            h2 {
+                font-size:1.8rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -512,273 +1185,319 @@
     <div class="background"></div>
     <div class="grid-overlay"></div>
     <div class="particles" id="particles"></div>
+    <div class="sparkle-container" id="sparkleContainer"></div>
+    <div class="transition-effect-container" id="transitionEffects"></div>
     
     <div class="loading-bar">
         <div class="loading-progress" id="progress"></div>
     </div>
 
     <div class="container">
-        <!-- Scene 1: Intro -->
-        <section id="intro" class="scene">
-            <div class="circle" style="width: 400px; height: 400px; right: -200px; top: -200px; opacity: 0.2;"></div>
-            <div class="circle" style="width: 300px; height: 300px; left: -150px; bottom: -150px; opacity: 0.15;"></div>
-            
-            <h1>Introducing <img src="images/icon.png" alt="NearMate Icon" class="icon-small"> NearMate</h1>
-            <div class="scene-content">
-                <div class="scene-visual">
-                    <div class="mockup-container">
-                        <div class="phone-mockup">
-                            <div class="screen">
-                                <img src="images/icon.png" alt="NearMate Logo" class="app-screen">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="scene-text">
-                    <h2>Connect with <span class="highlight">Purpose</span></h2>
-                    <p>NearMate is a revolutionary social platform that connects people with similar goals, problems, and interests based on their location.</p>
-                    <p>It's not just another social network – it's a collaborative ecosystem designed to help you grow, learn, and achieve your dreams.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scene 2: Problem -->
-        <section id="problem" class="scene">
-            <div class="circle" style="width: 400px; height: 400px; left: -200px; top: 40%; opacity: 0.2;"></div>
-            
-            <h1>The Problem</h1>
-            <div class="scene-content">
-                <div class="scene-text">
-                    <h2>Many of us have <span class="highlight">dreams</span>... but no direction</h2>
-                    <p>In today's world, we often face challenges where we need guidance, but don't know where to find it:</p>
-                    <ul class="feature-list">
-                        <li>Students wondering how to prepare for competitive exams</li>
-                        <li>Aspiring entrepreneurs looking for mentorship</li>
-                        <li>People feeling lost or unmotivated with no one to talk to</li>
-                        <li>Newcomers to a city seeking like-minded connections</li>
-                    </ul>
-                </div>
-                <div class="scene-visual">
-                    <div class="mockup-container">
-                        <div class="animated-person" style="left: 20%; top: 30%;"></div>
-                        <div class="animated-person" style="left: 70%; top: 50%; background: #0062ff;"></div>
-                        <div class="animated-person" style="left: 40%; top: 70%; background: #ff3366;"></div>
-                        <div style="width: 100%; height: 100%; background: rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: center;">
-                            <i class="fas fa-question" style="font-size: 5rem; color: rgba(255,255,255,0.3);"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scene 3: Solution -->
-        <section id="solution" class="scene">
-            <div class="circle" style="width: 500px; height: 500px; right: -250px; top: 30%; opacity: 0.2;"></div>
-            
-            <h1>The Solution</h1>
-            <div class="scene-content">
-                <div class="scene-visual">
-                    <div class="mockup-container">
-                        <div class="phone-mockup">
-                            <div class="screen">
-                                <img src="images/home screen.jpeg" alt="NearMate Home Screen" class="app-screen">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="scene-text">
-                    <h2>NearMate connects you with the <span class="highlight">right people</span></h2>
-                    <p>Our platform brings together people based on what truly matters:</p>
-                    <ul class="feature-list">
-                        <li><strong>Live Location:</strong> Find people nearby for real-world connections</li>
-                        <li><strong>Common Goals:</strong> Match with others who share your aspirations</li>
-                        <li><strong>Similar Problems:</strong> Connect with those facing the same challenges</li>
-                        <li><strong>Experience Level:</strong> Learn from mentors who've achieved your goals</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scene 4: Features -->
-        <section id="features" class="scene">
-            <div class="circle" style="width: 350px; height: 350px; left: -175px; bottom: -175px; opacity: 0.2;"></div>
-            
-            <h1>Key Features</h1>
-            <div class="scene-content">
-                <div class="scene-text">
-                    <h2>Everything you need to <span class="highlight">connect and grow</span></h2>
-                    <ul class="feature-list">
-                        <li><strong>Game-Style Matching:</strong> Exciting 1v1 matching screen for connections</li>
-                        <li><strong>Real-time Chat:</strong> Text, voice, and media sharing</li>
-                        <li><strong>Mentor System:</strong> Learn from verified experts in your field</li>
-                        <li><strong>Community Discussion:</strong> Topic-based forums to share ideas and get answers</li>
-                        <li><strong>Gamification:</strong> Earn points, badges, and achievements</li>
-                        <li><strong>Privacy Controls:</strong> You decide who sees your profile</li>
-                    </ul>
-                </div>
-                <div class="scene-visual">
-                    <div class="mockup-container">
-                        <div class="phone-mockup">
-                            <div class="screen">
-                                <img src="images/1 vs 1 matching screen.jpeg" alt="NearMate VS Screen" class="app-screen">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scene 5: Testimonials (NEW) -->
-        <section id="testimonials" class="scene">
-            <div class="circle" style="width: 400px; height: 400px; right: -200px; top: 20%; opacity: 0.2;"></div>
-            
-            <h1>What Users Are Saying</h1>
-            <div class="scene-content" style="flex-direction: column;">
-                <h2>Real <span class="highlight">success stories</span> from our community</h2>
+        <div class="section-wrapper">
+            <!-- Scene 1: Intro -->
+            <section id="intro" class="scene">
+                <div class="circle" style="width: 400px; height: 400px; right: -200px; top: -200px; opacity: 0.2;"></div>
+                <div class="circle" style="width: 300px; height: 300px; left: -150px; bottom: -150px; opacity: 0.15;"></div>
                 
-                <div class="testimonial-container">
-                    <div class="testimonial">
-                        <div class="testimonial-header">
-                            <div class="testimonial-avatar" style="background-color: #9500ff;">
-                                <i class="fas fa-user"></i>
+                <h1>Introducing <img src="/icon.png" alt="NearMate Icon" class="icon-small"> NearMate</h1>
+                <div class="scene-content">
+                    <div class="scene-visual">
+                        <div class="mockup-container">
+                            <div class="phone-mockup">
+                                <div class="screen">
+                                    <img src="/icon.png" alt="NearMate Logo" class="app-screen">
+                                </div>
                             </div>
-                            <div class="testimonial-info">
-                                <div class="testimonial-name">Sandeep Varma</div>
-                                <div class="testimonial-title">Tech Entrepreneur</div>
-                            </div>
-                        </div>
-                        <div class="testimonial-quote">
-                            "NearMate helped me find my co-founder who lived just 3 miles away! We had been working on similar ideas but never knew about each other. Now our startup has secured seed funding."
                         </div>
                     </div>
-                    
-                    <div class="testimonial">
-                        <div class="testimonial-header">
-                            <div class="testimonial-avatar" style="background-color: #0062ff;">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="testimonial-info">
-                                <div class="testimonial-name">Vinay Varma</div>
-                                <div class="testimonial-title">College Student</div>
-                            </div>
-                        </div>
-                        <div class="testimonial-quote">
-                            "I was struggling with my competitive exams until I found a study group on NearMate. Meeting weekly with people who share my goals has improved my scores dramatically!"
-                        </div>
+                    <div class="scene-text">
+                        <h2>Connect with <span class="highlight">Purpose</span></h2>
+                        <p>NearMate is a revolutionary social platform that connects people with similar goals, problems, and interests based on their location.</p>
+                        <p>It's not just another social network – it's a collaborative ecosystem designed to help you grow, learn, and achieve your dreams.</p>
                     </div>
-                    
-                    <div class="testimonial">
-                        <div class="testimonial-header">
-                            <div class="testimonial-avatar" style="background-color: #ff3366;">
-                                <i class="fas fa-user"></i>
+                </div>
+            </section>
+        </div>
+
+        <div class="section-wrapper">
+            <!-- Scene 2: Problem -->
+            <section id="problem" class="scene">
+                <div class="circle" style="width: 400px; height: 400px; left: -200px; top: 40%; opacity: 0.2;"></div>
+                
+                <h1>The Problem</h1>
+                <div class="scene-content">
+                    <div class="scene-text">
+                        <h2>Many of us have <span class="highlight">dreams</span>... but no direction</h2>
+                        <p>In today's world, we often face challenges where we need guidance, but don't know where to find it:</p>
+                        <ul class="feature-list">
+                            <li>Students wondering how to prepare for competitive exams</li>
+                            <li>Aspiring entrepreneurs looking for mentorship</li>
+                            <li>People feeling lost or unmotivated with no one to talk to</li>
+                            <li>Newcomers to a city seeking like-minded connections</li>
+                        </ul>
+                    </div>
+                    <div class="scene-visual">
+                        <div class="mockup-container">
+                            <div class="animated-person" style="left: 20%; top: 30%;"></div>
+                            <div class="animated-person" style="left: 70%; top: 50%; background: #0062ff;"></div>
+                            <div class="animated-person" style="left: 40%; top: 70%; background: #ff3366;"></div>
+                            <div style="width: 100%; height: 100%; background: rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: center;">
+                                <i class="fas fa-question" style="font-size: 5rem; color: rgba(255,255,255,0.3);"></i>
                             </div>
-                            <div class="testimonial-info">
-                                <div class="testimonial-name">Sanjay Varma.</div>
-                                <div class="testimonial-title">Fitness Enthusiast</div>
-                            </div>
-                        </div>
-                        <div class="testimonial-quote">
-                            "Finding consistent workout partners was always a challenge until NearMate. The community discussions feature helped me connect with fitness-minded people in my neighborhood."
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- Scene 6: Privacy -->
-        <section id="privacy" class="scene">
-            <div class="circle" style="width: 450px; height: 450px; right: -225px; top: 40%; opacity: 0.2;"></div>
-            
-            <h1>Your Privacy. Your Rules.</h1>
-            <div class="scene-content">
-                <div class="scene-visual">
-                    <div class="mockup-container">
-                        <div class="phone-mockup">
-                            <div class="screen">
-                                <div style="width: 100%; height: 100%; background: #111; padding: 20px; display: flex; flex-direction: column;">
-                                    <div style="font-weight: bold; color: white; margin-bottom: 20px;">Privacy Settings</div>
-                                    
-                                    <div style="margin-bottom: 15px;">
-                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                            <div style="color: white;">Show my profile to:</div>
-                                            <div style="color: #9500ff;">Within 5km</div>
+        <div class="section-wrapper">
+            <!-- Scene 3: Solution -->
+            <section id="solution" class="scene">
+                <div class="circle" style="width: 500px; height: 500px; right: -250px; top: 30%; opacity: 0.2;"></div>
+                
+                <h1>The Solution</h1>
+                <div class="scene-content">
+                    <div class="scene-visual">
+                        <div class="mockup-container">
+                            <div class="phone-mockup">
+                                <div class="screen">
+                                    <img src="/home screen.jpeg" alt="NearMate Home Screen" class="app-screen">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scene-text">
+                        <h2>NearMate connects you with the <span class="highlight">right people</span></h2>
+                        <p>Our platform brings together people based on what truly matters:</p>
+                        <ul class="feature-list">
+                            <li><strong>Live Location:</strong> Find people nearby for real-world connections</li>
+                            <li><strong>Common Goals:</strong> Match with others who share your aspirations</li>
+                            <li><strong>Similar Problems:</strong> Connect with those facing the same challenges</li>
+                            <li><strong>Experience Level:</strong> Learn from mentors who've achieved your goals</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="section-wrapper">
+            <!-- Scene 4: Features -->
+            <section id="features" class="scene">
+                <div class="circle" style="width: 350px; height: 350px; left: -175px; bottom: -175px; opacity: 0.2;"></div>
+                
+                <h1>Key Features</h1>
+                <div class="scene-content">
+                    <div class="scene-text">
+                        <h2>Everything you need to <span class="highlight">connect and grow</span></h2>
+                        <ul class="feature-list">
+                            <li><strong>Game-Style Matching:</strong> Exciting 1v1 matching screen for connections</li>
+                            <li><strong>Real-time Chat:</strong> Text, voice, and media sharing</li>
+                            <li><strong>Mentor System:</strong> Learn from verified experts in your field</li>
+                            <li><strong>Community Discussion:</strong> Topic-based forums to share ideas and get answers</li>
+                            <li><strong>Gamification:</strong> Earn points, badges, and achievements</li>
+                            <li><strong>Privacy Controls:</strong> You decide who sees your profile</li>
+                        </ul>
+                    </div>
+                    <div class="scene-visual">
+                        <div class="mockup-container">
+                            <div class="phone-mockup">
+                                <div class="screen">
+                                    <img src="/1 vs 1 matching screen.jpeg" alt="NearMate VS Screen" class="app-screen">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="section-wrapper">
+            <!-- Scene 5: Testimonials (NEW) -->
+            <section id="testimonials" class="scene">
+                <div class="circle" style="width: 400px; height: 400px; right: -200px; top: 20%; opacity: 0.2;"></div>
+                
+                <h1>What Users Are Saying</h1>
+                <div class="scene-content" style="flex-direction: column;">
+                    <h2>Real <span class="highlight">success stories</span> from our community</h2>
+                    
+                    <div class="testimonial-container">
+                        <div class="testimonial">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar" style="background-color: #9500ff;">
+                                    <img src="/sandeep.jpeg" alt="Sandeep Varma">
+                                </div>
+                                <div class="testimonial-info">
+                                    <div class="testimonial-name">Sandeep Varma</div>
+                                    <div class="testimonial-title">Tech Entrepreneur</div>
+                                </div>
+                            </div>
+                            <div class="testimonial-quote">
+                                "NearMate helped me find my co-founder who lived just 3 miles away! We had been working on similar ideas but never knew about each other. Now our startup has secured seed funding."
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar" style="background-color: #0062ff;">
+                                    <img src="/vinay.png" alt="Vinay Varma">
+                                </div>
+                                <div class="testimonial-info">
+                                    <div class="testimonial-name">Vinay Varma</div>
+                                    <div class="testimonial-title">College Student</div>
+                                </div>
+                            </div>
+                            <div class="testimonial-quote">
+                                "I was struggling with my competitive exams until I found a study group on NearMate. Meeting weekly with people who share my goals has improved my scores dramatically!"
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar" style="background-color: #ff3366;">
+                                    <img src="/sanjay.jpeg" alt="Sanjay Varma">
+                                </div>
+                                <div class="testimonial-info">
+                                    <div class="testimonial-name">Sanjay Varma.</div>
+                                    <div class="testimonial-title">Fitness Enthusiast</div>
+                                </div>
+                            </div>
+                            <div class="testimonial-quote">
+                                "Finding consistent workout partners was always a challenge until NearMate. The community discussions feature helped me connect with fitness-minded people in my neighborhood."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="section-wrapper">
+            <!-- Scene 6: Privacy -->
+            <section id="privacy" class="scene">
+                <div class="circle" style="width: 450px; height: 450px; right: -225px; top: 40%; opacity: 0.2;"></div>
+                
+                <h1>Your Privacy. Your Rules.</h1>
+                <div class="scene-content">
+                    <div class="scene-visual">
+                        <div class="mockup-container">
+                            <div class="phone-mockup">
+                                <div class="screen">
+                                    <div style="width: 100%; height: 100%; background: #111; padding: 20px; display: flex; flex-direction: column;">
+                                        <div style="font-weight: bold; color: white; margin-bottom: 20px;">Privacy Settings</div>
+                                        
+                                        <div style="margin-bottom: 15px;">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                                <div style="color: white;">Show my profile to:</div>
+                                                <div style="color: #9500ff;">Within 5km</div>
+                                            </div>
+                                            <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; position: relative;">
+                                                <div style="position: absolute; height: 6px; width: 40%; background: #9500ff; border-radius: 3px;"></div>
+                                            </div>
                                         </div>
-                                        <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; position: relative;">
-                                            <div style="position: absolute; height: 6px; width: 40%; background: #9500ff; border-radius: 3px;"></div>
+                                        
+                                        <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                                            <div style="color: white;">Anonymous Mode</div>
+                                            <div style="width: 50px; height: 26px; background: #9500ff; border-radius: 13px; position: relative;">
+                                                <div style="position: absolute; width: 22px; height: 22px; border-radius: 50%; background: white; top: 2px; right: 2px;"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    
-                                    <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
-                                        <div style="color: white;">Anonymous Mode</div>
-                                        <div style="width: 50px; height: 26px; background: #9500ff; border-radius: 13px; position: relative;">
-                                            <div style="position: absolute; width: 22px; height: 22px; border-radius: 50%; background: white; top: 2px; right: 2px;"></div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
-                                        <div style="color: white;">Share my goals publicly</div>
-                                        <div style="width: 50px; height: 26px; background: #9500ff; border-radius: 13px; position: relative;">
-                                            <div style="position: absolute; width: 22px; height: 22px; border-radius: 50%; background: white; top: 2px; right: 2px;"></div>
+                                        
+                                        <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                                            <div style="color: white;">Share my goals publicly</div>
+                                            <div style="width: 50px; height: 26px; background: #9500ff; border-radius: 13px; position: relative;">
+                                                <div style="position: absolute; width: 22px; height: 22px; border-radius: 50%; background: white; top: 2px; right: 2px;"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="scene-text">
+                        <h2>We believe in <span class="highlight">privacy by design</span></h2>
+                        <p>NearMate gives you complete control over your data and visibility:</p>
+                        <ul class="feature-list">
+                            <li>Choose who can see your profile based on distance</li>
+                            <li>Enable anonymous mode for sensitive conversations</li>
+                            <li>Control which parts of your profile are visible</li>
+                            <li>Verify people before sharing personal details</li>
+                            <li>Block or report users with a single tap</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="scene-text">
-                    <h2>We believe in <span class="highlight">privacy by design</span></h2>
-                    <p>NearMate gives you complete control over your data and visibility:</p>
-                    <ul class="feature-list">
-                        <li>Choose who can see your profile based on distance</li>
-                        <li>Enable anonymous mode for sensitive conversations</li>
-                        <li>Control which parts of your profile are visible</li>
-                        <li>Verify people before sharing personal details</li>
-                        <li>Block or report users with a single tap</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- Scene 7: Impact -->
-        <section id="impact" class="scene">
-            <div class="circle" style="width: 500px; height: 500px; left: -250px; top: 20%; opacity: 0.15;"></div>
-            
-            <h1>Real Impact. Real Growth.</h1>
-            <div class="scene-content" style="flex-direction: column;">
-                <div class="scene-text" style="max-width: 800px; margin-bottom: 3rem;">
-                    <h2>Built for <span class="highlight">dreamers, achievers</span>, and everyone in between</h2>
-                    <p>NearMate isn't just an app – it's a movement to bring back meaningful connections in a digital world.</p>
-                    <p>We're building a platform where students find mentors, entrepreneurs find co-founders, and people find their tribe.</p>
-                </div>
+        <div class="section-wrapper">
+            <!-- Scene 7: Impact -->
+            <section id="impact" class="scene">
+                <div class="circle" style="width: 500px; height: 500px; left: -250px; top: 20%; opacity: 0.15;"></div>
                 
-                <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
-                    <div style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px); max-width: 300px;">
-                        <div style="color: #9500ff; font-weight: bold; margin-bottom: 10px;">Sandeep Varma, Government Job Aspirant</div>
-                        <p style="font-size: 1rem; color: rgba(255,255,255,0.9); text-align: left;">"I found a study partner who lives just 2km away! We meet every weekend and prepare together. He introduced me to his friend who cleared the exam last year."</p>
+                <h1>Real Impact. Real Growth.</h1>
+                <div class="scene-content" style="flex-direction: column;">
+                    <div class="scene-text" style="max-width: 800px; margin-bottom: 3rem;">
+                        <h2>Built for <span class="highlight">dreamers, achievers</span>, and everyone in between</h2>
+                        <p>NearMate isn't just an app – it's a movement to bring back meaningful connections in a digital world.</p>
+                        <p>We're building a platform where students find mentors, entrepreneurs find co-founders, and people find their tribe.</p>
                     </div>
                     
-                    <div style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px); max-width: 300px;">
-                        <div style="color: #9500ff; font-weight: bold; margin-bottom: 10px;">Sanjay Varma, Startup Founder</div>
-                        <p style="font-size: 1rem; color: rgba(255,255,255,0.9); text-align: left;">"I connected with an experienced entrepreneur nearby who guided me through my early startup challenges. We now meet weekly for coffee and mentorship."</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px); max-width: 300px;">
+                            <div style="color: #9500ff; font-weight: bold; margin-bottom: 10px;">Sandeep Varma, Government Job Aspirant</div>
+                            <p style="font-size: 1rem; color: rgba(255,255,255,0.9); text-align: left;">"I found a study partner who lives just 2km away! We meet every weekend and prepare together. He introduced me to his friend who cleared the exam last year."</p>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px); max-width: 300px;">
+                            <div style="color: #9500ff; font-weight: bold; margin-bottom: 10px;">Sanjay Varma, Startup Founder</div>
+                            <p style="font-size: 1rem; color: rgba(255,255,255,0.9); text-align: left;">"I connected with an experienced entrepreneur nearby who guided me through my early startup challenges. We now meet weekly for coffee and mentorship."</p>
+                        </div>
+                        
+                        
                     </div>
-                    
-                    
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- Scene 8: Final CTA -->
-        <section id="cta" class="scene">
-            <div class="circle" style="width: 600px; height: 600px; right: -300px; bottom: -300px; opacity: 0.15;"></div>
-            
-            <h1>Be Near. Be Mate. Be <img src="images/icon.png" alt="NearMate Icon" class="icon-small"> NearMate.</h1>
-            <div style="max-width: 700px; text-align: center;">
-                <p>Your journey to <span class="highlight">meaningful connections</span> starts here. Join thousands of others who are already growing together.</p>
-                <p>Find mentors. Make friends. Achieve goals. All near you.</p>
-                <a href="#" class="final-cta" id="redirectBtn">Let the journey begin</a>
-            </div>
-        </section>
+        <div class="section-wrapper">
+            <!-- Scene 8: Founder Details (NEW) -->
+            <section id="founder" class="scene">
+                <div class="circle" style="width: 400px; height: 400px; right: -200px; bottom: -200px; opacity: 0.15;"></div>
+                
+                <h1>Meet Our Founder</h1>
+                <div class="scene-content">
+                    <div class="founder-image">
+                        <div class="founder-photo-container">
+                            <div class="founder-glow"></div>
+                            <img src="/founder.jpeg" alt="NearMate Founder" class="founder-photo" onerror="this.src='https://via.placeholder.com/300x300?text=Founder'">
+                        </div>
+                    </div>
+                    <div class="founder-text">
+                        <h2><span class="highlight">Mahendar Varma</span></h2>
+                        <p class="founder-title">Founder & CEO</p>
+                        <p class="founder-bio">A passionate visionary with a commitment to transforming how people connect and collaborate in the real world. With extensive experience in social technology and community building, Mahendar founded NearMate to solve the growing disconnection in our increasingly digital world.</p>
+                        <p class="founder-bio">"My vision for NearMate is to build technology that enhances real human connections rather than replacing them. In a world full of social media that often keeps us apart, we're creating a platform that brings people together based on shared goals and aspirations."</p>
+                        <div class="founder-social">
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="section-wrapper">
+            <!-- Scene 9: Final CTA (was 8) -->
+            <section id="cta" class="scene">
+                <div class="circle" style="width: 600px; height: 600px; right: -300px; bottom: -300px; opacity: 0.15;"></div>
+                
+                <h1>Be Near. Be Mate. Be <img src="/icon.png" alt="NearMate Icon" class="icon-small"> NearMate.</h1>
+                <div style="max-width: 700px; text-align: center;">
+                    <p>Your journey to <span class="highlight">meaningful connections</span> starts here. Join thousands of others who are already growing together.</p>
+                    <p>Find mentors. Make friends. Achieve goals. All near you.</p>
+                    <a href="#" class="final-cta" id="redirectBtn">Let the journey begin</a>
+                </div>
+            </section>
+        </div>
     </div>
 
     <div class="sound-control" id="soundControl">
@@ -802,17 +1521,57 @@
             const backgroundMusic = document.getElementById('backgroundMusic');
             const soundControl = document.getElementById('soundControl');
             const soundIcon = document.getElementById('soundIcon');
+            const sparkleContainer = document.getElementById('sparkleContainer');
             
             let isMuted = false;
             let currentSection = 0;
             let autoScrollEnabled = true;
             let comingFromCountdown = false;
             
+            // Available transition classes
+            const transitionClasses = [
+                'transition-fade-in',
+                'transition-slide-up',
+                'transition-slide-down',
+                'transition-slide-left',
+                'transition-slide-right',
+                'transition-zoom-in',
+                'transition-zoom-out',
+                'transition-flip',
+                'transition-rotate'
+            ];
+            
+            // Apply random transitions to each section
+            sections.forEach((section, index) => {
+                // Remove default transition class
+                section.classList.remove('scene');
+                
+                // Add a random transition class (excluding the index to prevent duplicates)
+                const randomIndex = Math.floor(Math.random() * transitionClasses.length);
+                section.classList.add(transitionClasses[randomIndex]);
+                
+                // Get all the content items for staggered animation
+                const contentItems = section.querySelectorAll('h1, h2, p, .scene-text, .scene-visual, .feature-list, .testimonial, .founder-image, .founder-text, .acknowledgment-card');
+                
+                contentItems.forEach((item, i) => {
+                    item.classList.add('content-item');
+                    item.classList.add(`delay-${(i % 8) + 1}`); // Add staggered delay (1-8)
+                });
+            });
+            
             // Check if we're coming from the countdown page
             if (window.location.hash === '#autostart' || 
                 document.referrer.includes('countdown.html')) {
                 comingFromCountdown = true;
                 console.log("Detected arrival from countdown page");
+                
+                // Call the special initialization for countdown
+                initAfterCountdown();
+                
+                // Trigger sparkle animation with a slight delay
+                setTimeout(() => {
+                    createSparkleExplosion();
+                }, 300);
             }
             
             // Initialize - hide all sections
@@ -951,24 +1710,103 @@
                 }
             }
             
+            // Function to reset all section styles to ensure proper visibility
+            function resetSectionStyles() {
+                const allSections = document.querySelectorAll('section');
+                console.log(`Resetting styles for ${allSections.length} sections`);
+                
+                allSections.forEach(section => {
+                    // Ensure all sections have proper styling for visibility
+                    section.style.opacity = "0";
+                    section.style.visibility = "hidden";
+                    section.style.position = "relative";
+                    section.style.width = "100%";
+                    section.style.maxWidth = "1200px";
+                    section.style.margin = "0 auto";
+                    section.style.minHeight = "100vh";
+                    section.style.height = "auto";
+                    section.style.overflow = "visible";
+                    section.style.display = "flex";
+                    section.style.flexDirection = "column";
+                    section.style.justifyContent = "center";
+                    section.style.alignItems = "center";
+                    section.style.padding = "4rem 2rem";
+                    
+                    // Fix height issues with specific sections
+                    if (section.id === 'intro') {
+                        // Ensure intro is fully visible
+                        section.style.paddingTop = "2rem";
+                    }
+                });
+            }
+            
             // Function to show a section without hiding others
             function showSection(index) {
+                // Get fresh reference to all sections
+                const sections = document.querySelectorAll('section');
+                
                 if (index >= 0 && index < sections.length) {
-                    console.log(`Showing section ${index}`);
+                    console.log(`Showing section ${index}: ${sections[index].id}`);
                     
                     // First, move all sections out of view (but don't hide them)
                     sections.forEach((section, i) => {
                         // Keep the section in the DOM but remove visible class
                         section.classList.remove('visible');
                         
-                        // We'll track the current focused section
-                        if (i === index) {
-                            console.log(`Making section ${i} visible`);
-                        }
+                        // Reset visibility but keep in DOM
+                        section.style.opacity = "0";
+                        section.style.visibility = "hidden";
+                        section.style.zIndex = "0";
+                        
+                        // Reset animations for elements in this section
+                        const contentItems = section.querySelectorAll('.content-item');
+                        contentItems.forEach(item => {
+                            item.classList.remove('animated');
+                        });
                     });
                     
                     // Make target section visible
                     sections[index].classList.add('visible');
+                    sections[index].style.opacity = "1";
+                    sections[index].style.visibility = "visible";
+                    sections[index].style.display = "flex";
+                    sections[index].style.zIndex = "1";
+                    
+                    // Animate content items with staggered delay
+                    const contentItems = sections[index].querySelectorAll('.content-item');
+                    contentItems.forEach((item, i) => {
+                        setTimeout(() => {
+                            item.classList.add('animated');
+                        }, i * 100 + 100); // Staggered delay after section becomes visible
+                    });
+                    
+                    // Apply specific animations based on section type
+                    const currentSectionId = sections[index].id;
+                    if (currentSectionId === 'features') {
+                        // Add trace effect for feature list items
+                        const featureItems = sections[index].querySelectorAll('.feature-list li');
+                        featureItems.forEach((item, i) => {
+                            item.style.opacity = '0';
+                            item.style.transform = 'translateX(20px)';
+                            setTimeout(() => {
+                                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                                item.style.opacity = '1';
+                                item.style.transform = 'translateX(0)';
+                            }, i * 100 + 500); // Staggered delay after section appears
+                        });
+                    } else if (currentSectionId === 'testimonials') {
+                        // Add pop-in effect for testimonials
+                        const testimonials = sections[index].querySelectorAll('.testimonial');
+                        testimonials.forEach((item, i) => {
+                            item.style.opacity = '0';
+                            item.style.transform = 'scale(0.8)';
+                            setTimeout(() => {
+                                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                                item.style.opacity = '1';
+                                item.style.transform = 'scale(1)';
+                            }, i * 200 + 500); // Staggered delay after section appears
+                        });
+                    }
                     
                     // Update current section index
                     currentSection = index;
@@ -976,22 +1814,25 @@
                     // Update progress bar
                     updateProgressBar();
                     
-                    // Scroll to the section smoothly
-                    sections[index].scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'start' 
-                    });
+                    // Scroll to the section with better positioning
+                    const sectionToShow = sections[index];
+                    const sectionWrapper = sectionToShow.parentElement;
+                    
+                    if (sectionWrapper && sectionWrapper.classList.contains('section-wrapper')) {
+                        // Scroll the wrapper into view
+                        sectionWrapper.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }
+                    
+                    // Debug output for troubleshooting sections
+                    console.log(`Current visible section: ${sections[index].id}`);
                     
                     // Update navigation buttons if they exist
                     if (typeof updateNavButtons === 'function') {
                         updateNavButtons();
                     }
-                    
-                    // Debug output
-                    console.log("Sections status:");
-                    sections.forEach((section, i) => {
-                        console.log(`Section ${i}: ${section.classList.contains('visible') ? 'visible' : 'hidden'}`);
-                    });
                 }
             }
             
@@ -1011,7 +1852,13 @@
                 autoScrollTimer = setInterval(function() {
                     if (currentSection < sections.length - 1) {
                         console.log(`Auto-scrolling to section ${currentSection + 1}`);
-                        showSection(currentSection + 1);
+                        // Play transition effect before showing next section
+                        playTransitionEffect();
+                        
+                        // Show next section after a short delay to allow effect to start
+                        setTimeout(() => {
+                            showSection(currentSection + 1);
+                        }, 300);
                     } else {
                         // Stop auto-scroll when we reach the end
                         console.log("Reached end, stopping auto-scroll");
@@ -1028,6 +1875,31 @@
                 }, 7000); // 7 seconds per section
             }
             
+            // Function to wrap sections in section-wrappers if they aren't already
+            function ensureSectionWrappers() {
+                const sections = document.querySelectorAll('section');
+                console.log(`Checking ${sections.length} sections for wrappers`);
+                
+                sections.forEach((section, index) => {
+                    // Check if this section is already wrapped
+                    if (!section.parentElement.classList.contains('section-wrapper')) {
+                        console.log(`Adding wrapper for section ${index}: ${section.id}`);
+                        
+                        // Create wrapper
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'section-wrapper';
+                        
+                        // Insert wrapper before section
+                        section.parentNode.insertBefore(wrapper, section);
+                        
+                        // Move section into wrapper
+                        wrapper.appendChild(section);
+                    } else {
+                        console.log(`Section ${index} already has wrapper: ${section.id}`);
+                    }
+                });
+            }
+            
             // Automatically start the intro when page loads
             function autoStart() {
                 console.log("Auto-starting intro experience");
@@ -1035,16 +1907,45 @@
                 // Try to unlock audio
                 unlockAudio();
                 
-                // Make sure all sections exist in the DOM
+                // First make sure the container is properly positioned
+                const container = document.querySelector('.container');
+                container.scrollTop = 0;
+                
+                // Reset all section styles first
+                resetSectionStyles();
+                
+                // Ensure sections have wrappers for proper centering
+                ensureSectionWrappers();
+                
+                // Get fresh reference to sections after wrapping
+                const sections = document.querySelectorAll('section');
+                
+                // Ensure all sections exist in the DOM and are accessible
                 sections.forEach((section, index) => {
                     // Never remove sections from the DOM
-                    section.style.display = ""; // Clear any display:none
+                    section.style.display = "flex"; // Ensure flex display
+                    console.log(`Initializing section ${index}: ${section.id}`);
                     
                     // Initially, only the first section should be visible
                     if (index === 0) {
                         section.classList.add('visible');
+                        section.style.opacity = "1";
+                        section.style.visibility = "visible";
+                        section.style.zIndex = "1";
+                        
+                        // Force all content in first section to be visible
+                        const contentItems = section.querySelectorAll('.content-item, h1, h2, p, .scene-content, .scene-visual, .scene-text');
+                        contentItems.forEach(item => {
+                            item.classList.add('animated');
+                            item.style.opacity = "1";
+                            item.style.visibility = "visible";
+                            item.style.transform = "translateY(0)";
+                        });
                     } else {
                         section.classList.remove('visible');
+                        section.style.opacity = "0";
+                        section.style.visibility = "hidden";
+                        section.style.zIndex = "0";
                     }
                 });
                 
@@ -1059,12 +1960,55 @@
                 
                 console.log("First section shown:", sections[0].classList.contains('visible'));
                 
+                // Explicitly scroll to top to ensure first section is visible
+                window.scrollTo(0, 0);
+                if (container) {
+                    container.scrollTop = 0;
+                    console.log("Scrolled container to top");
+                }
+                
+                // Fix intro section display
+                const introSection = document.getElementById('intro');
+                if (introSection) {
+                    introSection.style.paddingTop = "2rem";
+                    introSection.style.minHeight = "100vh";
+                    introSection.style.height = "auto";
+                    introSection.style.display = "flex";
+                    introSection.style.opacity = "1";
+                    introSection.style.visibility = "visible";
+                    
+                    // Force all visual elements to be displayed
+                    const introContent = introSection.querySelector('.scene-content');
+                    if (introContent) {
+                        introContent.style.opacity = "1";
+                        introContent.style.visibility = "visible";
+                        introContent.style.display = "flex";
+                    }
+                    
+                    // Force the intro section's wrapper to be at the top
+                    const introWrapper = introSection.closest('.section-wrapper');
+                    if (introWrapper) {
+                        introWrapper.scrollIntoView({ behavior: 'auto', block: 'start' });
+                    }
+                }
+                
+                // Ensure first section is in view
+                if (sections.length > 0) {
+                    const firstWrapper = sections[0].parentElement;
+                    if (firstWrapper && firstWrapper.classList.contains('section-wrapper')) {
+                        setTimeout(() => {
+                            firstWrapper.scrollIntoView({ behavior: 'auto', block: 'start' });
+                            container.scrollTop = 0; // Double-ensure we're at the top
+                        }, 100);
+                    }
+                }
+                
                 // Start auto-scroll timer with a delay
                 if (autoScrollEnabled) {
                     setTimeout(() => {
                         console.log("Starting auto-scroll after delay");
                         startAutoScroll();
-                    }, 2000);
+                    }, 3000); // Increased delay for intro visibility
                 }
             }
             
@@ -1093,8 +2037,13 @@
                         autoScrollTimer = null;
                     }
                     
-                    // Show the new section
-                    showSection(newIndex);
+                    // Play transition effect
+                    playTransitionEffect();
+                    
+                    // Show the new section after a short delay
+                    setTimeout(() => {
+                        showSection(newIndex);
+                    }, 300);
                 }
             }
             
@@ -1226,6 +2175,252 @@
             
             // Initial update of nav buttons
             updateNavButtons();
+
+            // Create sparkle explosion effect
+            function createSparkleExplosion() {
+                // Activate sparkle container
+                sparkleContainer.classList.add('active');
+                
+                // Create multiple sparkles in different positions
+                const sparkleCount = 120; // Number of sparkles
+                const colors = ['purple', 'blue', ''];
+                
+                // Clear any existing sparkles
+                sparkleContainer.innerHTML = '';
+                
+                // Create new sparkles
+                for (let i = 0; i < sparkleCount; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.classList.add('sparkle');
+                    
+                    // Add random color class
+                    const colorClass = colors[Math.floor(Math.random() * colors.length)];
+                    if (colorClass) {
+                        sparkle.classList.add(colorClass);
+                    }
+                    
+                    // Random position
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight;
+                    sparkle.style.left = `${x}px`;
+                    sparkle.style.top = `${y}px`;
+                    
+                    // Random size
+                    const size = Math.random() * 15 + 5; // 5-20px
+                    sparkle.style.width = `${size}px`;
+                    sparkle.style.height = `${size}px`;
+                    
+                    // Random animation delay
+                    sparkle.style.animationDelay = `${Math.random() * 0.5}s`;
+                    
+                    // Add to container
+                    sparkleContainer.appendChild(sparkle);
+                }
+                
+                // Remove active class after animation completes
+                setTimeout(() => {
+                    sparkleContainer.classList.remove('active');
+                }, 2500);
+            }
+
+            // Available transition effects
+            const transitionEffects = [
+                'wipe-effect',
+                'flash-effect',
+                'radial-effect',
+                'particles-burst-effect',
+                'grid-glitch-effect'
+            ];
+            
+            // Transition effects container
+            const transitionEffectsContainer = document.getElementById('transitionEffects');
+            
+            // Function to create and play a transition effect
+            function playTransitionEffect() {
+                // Clear previous effects
+                transitionEffectsContainer.innerHTML = '';
+                
+                // Choose a random effect
+                const effectClass = transitionEffects[Math.floor(Math.random() * transitionEffects.length)];
+                
+                // Create the effect element
+                const effectElement = document.createElement('div');
+                effectElement.className = effectClass;
+                
+                // For particles burst effect, create multiple particles
+                if (effectClass === 'particles-burst-effect') {
+                    for (let i = 0; i < 100; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'burst-particle';
+                        
+                        // Random start position (center of screen)
+                        const startX = 50;
+                        const startY = 50;
+                        
+                        // Random end position (anywhere on screen)
+                        const endX = (Math.random() * 200 - 100); // -100% to 100% from center
+                        const endY = (Math.random() * 200 - 100);
+                        
+                        // Random color
+                        particle.style.background = Math.random() > 0.5 ? '#9500ff' : '#0062ff';
+                        
+                        // Set custom animation variables
+                        particle.style.setProperty('--x', `${endX}%`);
+                        particle.style.setProperty('--y', `${endY}%`);
+                        
+                        // Position at center
+                        particle.style.left = `${startX}%`;
+                        particle.style.top = `${startY}%`;
+                        
+                        // Random delay
+                        particle.style.animationDelay = `${Math.random() * 0.3}s`;
+                        
+                        effectElement.appendChild(particle);
+                    }
+                }
+                
+                // Add the effect to the container
+                transitionEffectsContainer.appendChild(effectElement);
+                
+                // Activate the container
+                transitionEffectsContainer.classList.add('active');
+                
+                // Hide after animation completes
+                setTimeout(() => {
+                    transitionEffectsContainer.classList.remove('active');
+                }, 1200); // Slightly longer than animations
+            }
+
+            // Add interactive effects to specific elements
+            function applyInteractiveEffects() {
+                // Apply hover effects to important text elements
+                document.querySelectorAll('h2 .highlight, .feature-list strong, .testimonial-name').forEach(el => {
+                    el.classList.add('highlight-on-hover');
+                });
+                
+                // Add floating animation to visual elements
+                document.querySelectorAll('.phone-mockup, .animated-person, .animated-pin, .scene-image').forEach(el => {
+                    el.classList.add('float-animation');
+                });
+                
+                // Add pulse animation to important elements
+                document.querySelectorAll('.icon-small, .final-cta, .social-icon').forEach(el => {
+                    el.classList.add('pulse-animation');
+                });
+                
+                // Add bounce effect to interactive elements
+                document.querySelectorAll('.testimonial, .acknowledgment-card, .feature-list li').forEach(el => {
+                    el.classList.add('bounce-on-hover');
+                });
+                
+                // Add glow effect to containers
+                document.querySelectorAll('.scene-visual, .founder-photo-container, .testimonial-avatar').forEach(el => {
+                    el.classList.add('glow-on-hover');
+                });
+                
+                // Add typing animation to first h1 when it becomes visible
+                const introTitle = document.querySelector('#intro h1');
+                if (introTitle) {
+                    introTitle.classList.add('letter-spacing-animation');
+                }
+            }
+            
+            // Apply animations to specific elements
+            function animateContentElements() {
+                // Visual trace effect for some elements
+                const addTraceEffect = () => {
+                    const traceElements = document.querySelectorAll('.feature-list li:not(.trace-added)');
+                    traceElements.forEach((el, index) => {
+                        // Only apply to visible elements
+                        if (isElementInViewport(el)) {
+                            el.classList.add('trace-added');
+                            setTimeout(() => {
+                                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                                el.style.opacity = '1';
+                                el.style.transform = 'translateX(0)';
+                            }, index * 100);
+                        }
+                    });
+                };
+                
+                // Helper to check if element is in viewport
+                function isElementInViewport(el) {
+                    const rect = el.getBoundingClientRect();
+                    return (
+                        rect.top >= 0 &&
+                        rect.left >= 0 &&
+                        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                    );
+                }
+                
+                // Call the trace effect
+                addTraceEffect();
+                
+                // Continue calling it for elements that become visible
+                window.addEventListener('scroll', addTraceEffect);
+            }
+            
+            // Apply interactive effects after a short delay
+            setTimeout(applyInteractiveEffects, 1000);
+            
+            // Call animation function
+            animateContentElements();
+
+            // Specifically handle the case when coming from countdown
+            function initAfterCountdown() {
+                console.log("Special initialization for coming from countdown");
+                
+                // Force immediate visibility of intro section
+                const introSection = document.getElementById('intro');
+                if (introSection) {
+                    // Make sure intro section is fully visible
+                    introSection.style.opacity = "1";
+                    introSection.style.visibility = "visible";
+                    introSection.style.display = "flex";
+                    introSection.style.zIndex = "2";
+                    
+                    // Make sure all content inside intro is visible
+                    const introContent = introSection.querySelector('.scene-content');
+                    if (introContent) {
+                        introContent.style.opacity = "1";
+                        introContent.style.visibility = "visible";
+                        introContent.style.display = "flex";
+                    }
+                    
+                    // Make sure visual and text are visible
+                    const sceneVisual = introSection.querySelector('.scene-visual');
+                    const sceneText = introSection.querySelector('.scene-text');
+                    
+                    if (sceneVisual) {
+                        sceneVisual.style.opacity = "1";
+                        sceneVisual.style.visibility = "visible";
+                        sceneVisual.style.display = "flex";
+                    }
+                    
+                    if (sceneText) {
+                        sceneText.style.opacity = "1";
+                        sceneText.style.visibility = "visible";
+                        sceneText.style.display = "flex";
+                    }
+                    
+                    // Force all content items to be animated immediately
+                    const contentItems = introSection.querySelectorAll('.content-item');
+                    contentItems.forEach(item => {
+                        item.classList.add('animated');
+                        item.style.opacity = "1";
+                        item.style.transform = "translateY(0)";
+                    });
+                }
+                
+                // Ensure the intro section is scrolled into view
+                setTimeout(() => {
+                    const introWrapper = introSection ? introSection.closest('.section-wrapper') : null;
+                    if (introWrapper) {
+                        introWrapper.scrollIntoView({ behavior: 'auto', block: 'start' });
+                    }
+                }, 100);
+            }
         });
     </script>
 </body>
