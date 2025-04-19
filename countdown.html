@@ -302,25 +302,46 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: linear-gradient(45deg, #9500ff, #0062ff);
-            color: white;
             font-family: 'Orbitron', sans-serif;
             font-size: 1.2rem;
             font-weight: 700;
-            padding: 15px 30px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(45deg, #9500ff, #0062ff);
+            color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            z-index: 100;
-            box-shadow: 0 0 30px rgba(149, 0, 255, 0.7);
-            letter-spacing: 1px;
-            text-transform: uppercase;
             transition: all 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(149, 0, 255, 0.6);
+            z-index: 100;
+        }
+        
+        .start-button::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.7);
+            animation: progress-countdown 1s linear forwards;
+        }
+        
+        @keyframes progress-countdown {
+            0% { width: 100%; }
+            100% { width: 0%; }
         }
         
         .start-button:hover {
             transform: translate(-50%, -50%) scale(1.05);
-            box-shadow: 0 0 40px rgba(149, 0, 255, 0.9);
+            box-shadow: 0 10px 40px rgba(149, 0, 255, 0.7);
+        }
+        
+        .start-button:hover::before {
+            animation-play-state: paused;
         }
         
         .overlay {
@@ -350,7 +371,7 @@
 
     <div class="overlay" id="startOverlay">
         <button class="start-button" id="startButton">
-            Start Countdown
+            Start Now (Auto in 1s)
         </button>
     </div>
 
@@ -460,6 +481,7 @@
             // Audio state
             let isMuted = false;
             let countdownStarted = false;
+            let autoStartTimer = null;
             
             // Set volume for all audio
             const setVolumes = () => {
@@ -487,6 +509,17 @@
                 particleContainer.appendChild(particle);
             }
             
+            // Update progress text to show auto-start info
+            progressText.textContent = "Starting automatically in 1s...";
+            
+            // Set up automatic start timer
+            autoStartTimer = setTimeout(() => {
+                if (!countdownStarted) {
+                    console.log("Auto-starting countdown after 1 second");
+                    hideOverlayAndStart();
+                }
+            }, 1000);
+            
             // Sound control
             soundControl.addEventListener('click', function() {
                 isMuted = !isMuted;
@@ -494,8 +527,14 @@
                 soundIcon.className = isMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
             });
             
-            // Start button click handler
-            startButton.addEventListener('click', function() {
+            // Common function to hide overlay and start countdown
+            function hideOverlayAndStart() {
+                // Clear the auto-start timer if it's still running
+                if (autoStartTimer) {
+                    clearTimeout(autoStartTimer);
+                    autoStartTimer = null;
+                }
+                
                 // Hide overlay
                 startOverlay.classList.add('hidden');
                 
@@ -506,6 +545,11 @@
                 setTimeout(() => {
                     startCountdown();
                 }, 500);
+            }
+            
+            // Start button click handler
+            startButton.addEventListener('click', function() {
+                hideOverlayAndStart();
             });
             
             // Countdown function
