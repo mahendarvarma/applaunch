@@ -736,6 +736,38 @@
             font-style: italic;
             line-height: 1.4;
         }
+        
+        /* Sound control button */
+        .sound-control {
+            position: fixed;
+            bottom: 200px;
+            right: 20px;
+            background: rgba(3, 6, 24, 0.7);
+            backdrop-filter: blur(5px);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            border: 1px solid rgba(0, 194, 255, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 194, 255, 0.3);
+        }
+        
+        .sound-control:hover {
+            background: rgba(0, 194, 255, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 194, 255, 0.5);
+        }
+        
+        .sound-control i {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px rgba(0, 194, 255, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -763,6 +795,16 @@
             <div class="hexagon" style="top: 30%; right: 15%; opacity: 0.2;"></div>
             <div class="hexagon" style="bottom: 20%; right: 10%; opacity: 0.3;"></div>
         </div>
+        
+        <!-- Sound control button -->
+        <div class="sound-control" id="soundControl">
+            <i class="fas fa-volume-up" id="soundIcon"></i>
+        </div>
+        
+        <!-- Background audio -->
+        <audio id="backgroundMusic" preload="auto" loop>
+            <source src="music/launch_bg.mp3" type="audio/mpeg">
+        </audio>
         
         <!-- Hero section -->
         <div class="hero">
@@ -901,6 +943,62 @@
                 
                 document.querySelector('.background').appendChild(dataFlow);
             }
+            
+            // Audio controls
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            const soundControl = document.getElementById('soundControl');
+            const soundIcon = document.getElementById('soundIcon');
+            let isMuted = false;
+            
+            // Try to play background music (may be blocked by browser)
+            try {
+                // Set initial volume
+                backgroundMusic.volume = 0.6;
+                
+                const playPromise = backgroundMusic.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log('Background music started successfully');
+                    }).catch(error => {
+                        console.error('Auto-play was prevented:', error);
+                        // Update icon to show muted state
+                        soundIcon.className = 'fas fa-volume-mute';
+                        isMuted = true;
+                    });
+                }
+            } catch (e) {
+                console.error('Error playing audio:', e);
+            }
+            
+            // Add click event for sound toggle
+            soundControl.addEventListener('click', function() {
+                isMuted = !isMuted;
+                
+                if (isMuted) {
+                    backgroundMusic.volume = 0;
+                    soundIcon.className = 'fas fa-volume-mute';
+                } else {
+                    backgroundMusic.volume = 0.6;
+                    soundIcon.className = 'fas fa-volume-up';
+                    
+                    // Try to play if it was paused
+                    backgroundMusic.play().catch(e => {
+                        console.error('Could not play audio on click:', e);
+                    });
+                }
+            });
+            
+            // Enable audio on first user interaction with the page
+            document.addEventListener('click', function audioUnlockHandler() {
+                if (backgroundMusic.paused) {
+                    backgroundMusic.play().catch(e => {
+                        console.error('Could not play audio after user interaction:', e);
+                    });
+                }
+                // Remove the listener after first click
+                document.removeEventListener('click', audioUnlockHandler);
+            }, { once: true });
             
             // Launch button functionality
             const launchBtn = document.getElementById('launchBtn');
